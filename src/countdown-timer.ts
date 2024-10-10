@@ -2,6 +2,7 @@ export function setupTimers() {
   const elements = Array.from(document.querySelectorAll('[countdown-timer]'))
 
   for (const element of elements) {
+    console.log('element:', element)
     const date = new Date(element.getAttribute('data-date') as string)
     if (isNaN(date.getTime())) {
       console.error('Invalid date:', element.getAttribute('data-date'))
