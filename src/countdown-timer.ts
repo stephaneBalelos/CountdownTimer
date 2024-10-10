@@ -56,13 +56,14 @@ export function setupTimers() {
       render(secondsElement, values.seconds, secondsUnits)
 
     }, 1000)
-
   }
-
 }
 
 const render = (el: Element, value: number, units: (string | undefined)[]) => {
-  const text = value.toString().padStart(2, '0')
+  let text = value.toString()
+  if (value != 0) {
+    text = text.padStart(2, '0')
+  }
   const unit = value <= 1 ? units[0] : units[1]
   el.innerHTML = `${text} ${unit}`
 }
