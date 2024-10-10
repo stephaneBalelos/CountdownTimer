@@ -22,8 +22,8 @@ export function setupTimers() {
     const expiredMessage = expiredMessageEl?.innerHTML ?? 'Expired'
     expiredMessageEl?.remove()
 
-    const daysUnits = [daysElement.querySelector('[data-unit]')?.innerHTML ?? 'day', daysElement.querySelector('[data-days]')?.innerHTML ?? 'days']
-    const hoursUnits = [hoursElement.querySelector('[data-init]')?.innerHTML ?? 'hour', hoursElement.querySelector('[data-inits]')?.innerHTML ?? 'hours']
+    const daysUnits = [daysElement.querySelector('[data-unit]')?.innerHTML ?? 'day', daysElement.querySelector('[data-units]')?.innerHTML ?? 'days']
+    const hoursUnits = [hoursElement.querySelector('[data-unit]')?.innerHTML ?? 'hour', hoursElement.querySelector('[data-units]')?.innerHTML ?? 'hours']
     const minutesUnits = [minutesElement.querySelector('[data-unit]')?.innerHTML ?? 'minute', minutesElement.querySelector('[data-units]')?.innerHTML ?? 'minutes']
     const secondsUnits = [secondsElement.querySelector('[data-unit]')?.innerHTML ?? 'seconds', secondsElement.querySelector('[data-units]')?.innerHTML ?? 'seconds']
 
