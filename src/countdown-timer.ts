@@ -5,38 +5,48 @@ export function setupTimers() {
     const date = new Date(element.getAttribute('data-date') as string)
     if (isNaN(date.getTime())) {
       console.error('Invalid date:', element.getAttribute('data-date'))
+      element.innerHTML = '** Countdown Timer Invalid Date, check console for more info **'
       continue
     }
-    const daysElement = element.querySelector('[data-days]')
-    const hoursElement = element.querySelector('[data-hours]')
-    const minutesElement = element.querySelector('[data-minutes]')
-    const secondsElement = element.querySelector('[data-seconds]')
+    const daysElement = element.querySelector('[days]')
+    const hoursElement = element.querySelector('[hours]')
+    const minutesElement = element.querySelector('[minutes]')
+    const secondsElement = element.querySelector('[seconds]')
     if (!daysElement || !hoursElement || !minutesElement || !secondsElement) {
       console.error('Missing elements:', element)
+      element.innerHTML = '** Countdown Timer Error, check console for more info **'
       continue
     }
 
+    const daysUnits = [daysElement.querySelector('[data-unit]')?.innerHTML ?? 'day', daysElement.querySelector('[data-days]')?.innerHTML ?? 'days']
+    const hoursUnits = [hoursElement.querySelector('[data-init]')?.innerHTML ?? 'hour', hoursElement.querySelector('[data-inits]')?.innerHTML ?? 'hours']
+    const minutesUnits = [minutesElement.querySelector('[data-unit]')?.innerHTML ?? 'minute', minutesElement.querySelector('[data-units]')?.innerHTML ?? 'minutes']
+    const secondsUnits = [secondsElement.querySelector('[data-unit]')?.innerHTML ?? 'seconds', secondsElement.querySelector('[data-units]')?.innerHTML ?? 'seconds']
+
+
     const { days, hours, minutes, seconds } = update(date)
-    render(daysElement, days)
-    render(hoursElement, hours)
-    render(minutesElement, minutes)
-    render(secondsElement, seconds)
+    render(daysElement, days, daysUnits)
+    render(hoursElement, hours, hoursUnits)
+    render(minutesElement, minutes, minutesUnits)
+    render(secondsElement, seconds, secondsUnits)
 
     setInterval(() => {
       
       const values = update(date)
 
-      render(daysElement, values.days)
-      render(hoursElement, values.hours)
-      render(minutesElement, values.minutes)
-      render(secondsElement, values.seconds)
+      render(daysElement, values.days, daysUnits)
+      render(hoursElement, values.hours, hoursUnits)
+      render(minutesElement, values.minutes, minutesUnits)
+      render(secondsElement, values.seconds, secondsUnits)
     }, 1000)
   }
 
 }
 
-const render = (el: Element, value: number) => {
-  el.innerHTML = value.toString()
+const render = (el: Element, value: number, units: (string | undefined)[]) => {
+  const text = value.toString().padStart(2, '0')
+  const unit = value === 1 ? units[0] : units[1]
+  el.innerHTML = `${text} ${unit}`
 }
 
 const update = (date: Date) => {
