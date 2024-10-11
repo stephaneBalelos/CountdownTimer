@@ -1,47 +1,49 @@
-function E() {
-  var o, t, r, s, y, T, M, S;
-  const i = Array.from(document.querySelectorAll("[countdown-timer]"));
-  for (const e of i) {
+function b() {
+  var n, t, o, s, y, f, M, S;
+  const c = Array.from(document.querySelectorAll("[countdown-timer]"));
+  for (const e of c) {
     console.log("element:", e);
-    const f = new Date(e.getAttribute("data-date"));
-    if (isNaN(f.getTime())) {
+    const T = new Date(e.getAttribute("data-date"));
+    if (isNaN(T.getTime())) {
       console.error("Invalid date:", e.getAttribute("data-date")), e.innerHTML = "** Countdown Timer Invalid Date, check console for more info **";
       continue;
     }
-    const u = e.querySelector("[days]"), a = e.querySelector("[hours]"), l = e.querySelector("[minutes]"), d = e.querySelector("[seconds]");
-    if (!u || !a || !l || !d) {
+    const a = e.querySelector("[days]"), u = e.querySelector("[hours]"), l = e.querySelector("[minutes]"), d = e.querySelector("[seconds]");
+    if (!a || !u || !l || !d) {
       console.error("Missing elements:", e), e.innerHTML = "** Countdown Timer Error, check console for more info **";
       continue;
     }
-    const c = e.querySelector("[data-expired-message]"), L = (c == null ? void 0 : c.innerHTML) ?? "Expired";
-    c == null || c.remove();
-    const h = [((o = u.querySelector("[data-unit]")) == null ? void 0 : o.innerHTML) ?? "day", ((t = u.querySelector("[data-units]")) == null ? void 0 : t.innerHTML) ?? "days"], q = [((r = a.querySelector("[data-unit]")) == null ? void 0 : r.innerHTML) ?? "hour", ((s = a.querySelector("[data-units]")) == null ? void 0 : s.innerHTML) ?? "hours"], H = [((y = l.querySelector("[data-unit]")) == null ? void 0 : y.innerHTML) ?? "minute", ((T = l.querySelector("[data-units]")) == null ? void 0 : T.innerHTML) ?? "minutes"], g = [((M = d.querySelector("[data-unit]")) == null ? void 0 : M.innerHTML) ?? "seconds", ((S = d.querySelector("[data-units]")) == null ? void 0 : S.innerHTML) ?? "seconds"], v = w(f);
-    if (!v) {
+    const q = e.querySelector("[data-active-message]"), i = e.querySelector("[data-expired-message]"), L = (i == null ? void 0 : i.innerHTML) ?? "Expired";
+    i == null || i.remove();
+    const h = [((n = a.querySelector("[data-unit]")) == null ? void 0 : n.innerHTML) ?? "day", ((t = a.querySelector("[data-units]")) == null ? void 0 : t.innerHTML) ?? "days"], H = [((o = u.querySelector("[data-unit]")) == null ? void 0 : o.innerHTML) ?? "hour", ((s = u.querySelector("[data-units]")) == null ? void 0 : s.innerHTML) ?? "hours"], g = [((y = l.querySelector("[data-unit]")) == null ? void 0 : y.innerHTML) ?? "minute", ((f = l.querySelector("[data-units]")) == null ? void 0 : f.innerHTML) ?? "minutes"], v = [((M = d.querySelector("[data-unit]")) == null ? void 0 : M.innerHTML) ?? "seconds", ((S = d.querySelector("[data-units]")) == null ? void 0 : S.innerHTML) ?? "seconds"], w = p(T);
+    if (!w) {
       e.innerHTML = L;
       continue;
     }
-    const { days: p, hours: A, minutes: I, seconds: U } = v;
-    n(u, p, h), n(a, A, q), n(l, I, H), n(d, U, g);
+    const { days: A, hours: E, minutes: I, seconds: U } = w;
+    r(a, A, h), r(u, E, H), r(l, I, g), r(d, U, v);
     const D = setInterval(() => {
-      const m = w(f);
+      const m = p(T);
       if (!m) {
-        clearInterval(D), e.innerHTML = L;
+        clearInterval(D), q && q.remove(), e.innerHTML = L;
         return;
       }
-      n(u, m.days, h), n(a, m.hours, q), n(l, m.minutes, H), n(d, m.seconds, g);
+      r(a, m.days, h), r(u, m.hours, H), r(l, m.minutes, g), r(d, m.seconds, v);
     }, 1e3);
   }
 }
-const n = (i, o, t) => {
-  const r = o.toString().padStart(2, "0"), s = o <= 1 ? t[0] : t[1];
-  i.innerHTML = `${r} ${s}`;
-}, w = (i) => {
-  const o = /* @__PURE__ */ new Date(), t = i.getTime() - o.getTime();
+const r = (c, n, t) => {
+  let o = n.toString();
+  n != 0 && (o = o.padStart(2, "0"));
+  const s = n <= 1 ? t[0] : t[1];
+  c.innerHTML = `${o} ${s}`;
+}, p = (c) => {
+  const n = /* @__PURE__ */ new Date(), t = c.getTime() - n.getTime();
   if (t < 0)
     return null;
-  const r = Math.floor(t / (1e3 * 60 * 60 * 24)), s = Math.floor(t % (1e3 * 60 * 60 * 24) / (1e3 * 60 * 60)), y = Math.floor(t % (1e3 * 60 * 60) / (1e3 * 60)), T = Math.floor(t % (1e3 * 60) / 1e3);
-  return { days: r, hours: s, minutes: y, seconds: T };
+  const o = Math.floor(t / (1e3 * 60 * 60 * 24)), s = Math.floor(t % (1e3 * 60 * 60 * 24) / (1e3 * 60 * 60)), y = Math.floor(t % (1e3 * 60 * 60) / (1e3 * 60)), f = Math.floor(t % (1e3 * 60) / 1e3);
+  return { days: o, hours: s, minutes: y, seconds: f };
 };
 export {
-  E as setupTimers
+  b as setupTimers
 };

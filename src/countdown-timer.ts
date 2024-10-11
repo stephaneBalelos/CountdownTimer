@@ -19,6 +19,7 @@ export function setupTimers() {
       continue
     }
 
+    const activeMessageEl = element.querySelector('[data-active-message]')
     const expiredMessageEl = element.querySelector('[data-expired-message]')
     const expiredMessage = expiredMessageEl?.innerHTML ?? 'Expired'
     expiredMessageEl?.remove()
@@ -46,6 +47,9 @@ export function setupTimers() {
 
       if (!values) {
         clearInterval(interval)
+        if (activeMessageEl) {
+          activeMessageEl.remove()
+        }
         element.innerHTML = expiredMessage
         return
       }
